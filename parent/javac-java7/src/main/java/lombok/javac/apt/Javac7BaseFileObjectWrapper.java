@@ -22,6 +22,7 @@
 
 package lombok.javac.apt;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -111,5 +112,18 @@ class Javac7BaseFileObjectWrapper extends com.sun.tools.javac.file.BaseFileObjec
 	
 	@Override public String toString() {
 		return delegate.toString();
+	}
+
+	//TODO implement missing methods getShortName and inferBinaryName
+	@Override
+	public String getShortName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected String inferBinaryName(Iterable<? extends File> arg0) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
