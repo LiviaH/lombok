@@ -21,6 +21,8 @@
  */
 package lombok.core;
 
+import java.io.InputStream;
+
 /**
  * This class just holds lombok's current version.
  */
@@ -28,7 +30,7 @@ public class Version {
 	// ** CAREFUL ** - this class must always compile with 0 dependencies (it must not refer to any other sources or libraries).
 	// Note: In 'X.Y.Z', if Z is odd, its a snapshot build built from the repository, so many different 0.10.3 versions can exist, for example.
 	// Official builds always end in an even number. (Since 0.10.2).
-	private static final String VERSION = "0.11.5";
+	private static String VERSION = null;
 	private static final String RELEASE_NAME = "Dashing Kakapo";
 	
 	private Version() {
@@ -50,6 +52,28 @@ public class Version {
 	 * Get the current Lombok version.
 	 */
 	public static String getVersion() {
+		if( null == VERSION   ){
+			InputStream iStream = null;
+			java.io.BufferedInputStream stream = null;
+			try{
+				java.util.Properties properties = new java.util.Properties();
+				iStream = Version.class.getClassLoader().getResourceAsStream("main.properties");
+				stream = new java.io.BufferedInputStream( iStream );
+				properties.load(stream);
+				VERSION = properties.getProperty("lombok.current.version");
+			}catch( Exception e){
+				e.printStackTrace();
+			}finally{
+				try{
+					if(null != iStream)
+						iStream.close();
+				}catch(Throwable ignore){}
+				try{
+					if( null != stream )
+						stream.close();
+				}catch(Throwable ignore){}
+			}
+		}
 		return VERSION;
 	}
 	
@@ -65,6 +89,6 @@ public class Version {
 	}
 	
 	public static String getFullVersion() {
-		return String.format("v%s \"%s\"", VERSION, RELEASE_NAME);
+		return String.format("v%s \"%s\"", getVersion(), RELEASE_NAME);
 	}
 }
