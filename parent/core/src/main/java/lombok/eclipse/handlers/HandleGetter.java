@@ -24,6 +24,8 @@ package lombok.eclipse.handlers;
 import static lombok.eclipse.Eclipse.*;
 import static lombok.eclipse.handlers.EclipseHandlerUtil.*;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -223,16 +225,45 @@ public class HandleGetter extends EclipseAnnotationHandler<Getter> {
 	}
 	
 	private static Annotation[] findDelegatesAndMarkAsHandled(EclipseNode fieldNode) {
+		
+		Class patchDelegateClazz=null;
+		Method markHandledMethod=null;
+		try {
+			patchDelegateClazz = Thread.class.forName("lombok.eclipse.agent.PatchDelegate");
+			markHandledMethod = patchDelegateClazz.getMethod("markHandled", Annotation.class);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		List<Annotation> delegates = new ArrayList<Annotation>();
 		for (EclipseNode child : fieldNode.down()) {
 			if (annotationTypeMatches(Delegate.class, child)) {
 				Annotation delegate = (Annotation)child.get();
-				PatchDelegate.markHandled(delegate);
+				try {
+					markHandledMethod.invoke(null, delegate);
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}//PatchDelegate.markHandled(delegate);
 				delegates.add(delegate);
 			}
 		}
 		return delegates.toArray(EMPTY_ANNOTATIONS_ARRAY);
 	}
+
 	
 	private MethodDeclaration generateGetter(TypeDeclaration parent, EclipseNode fieldNode, String name, int modifier, ASTNode source, boolean lazy) {
 		
