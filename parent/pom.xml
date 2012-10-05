@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.projectlombok.mvn</groupId>
+	<artifactId>parent</artifactId>
+	<version>0.11.4</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<javatools_version>tools-java7</javatools_version>
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.0.2</version>
+					<configuration>
+						<verbose>true</verbose>
+						<fork>true</fork>
+						<source>1.6</source>
+						<target>1.6</target>
+						<compilerVersion>1.7</compilerVersion>
+						<annotationProcessors>
+							<annotationProcessor>~/.m2/repository/org/mangosdk/spi/spi/0.2.4/spi-0.2.4.jar</annotationProcessor>
+						</annotationProcessors>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.4.1</version>
+					<configuration>
+						<excludeDefaultDirectories>true</excludeDefaultDirectories>
+						<filesets>
+							<fileset>
+								<directory>target</directory>
+							</fileset>
+						</filesets>
+						<verbose>true</verbose>
+					</configuration>
+				</plugin>
+
+				<!-- keine pom.xml in die jar Dateien aufnehmen!			-->
+				<!-- (interessiert nicht, wie die pom.xml ausgesehen hat)	-->
+				<!-- {														-->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<configuration>
+						<archive>
+							<addMavenDescriptor>false</addMavenDescriptor>
+						</archive>
+					</configuration>
+				</plugin>
+				<!-- }														-->
+
+				<!-- Do not install this artifact and all sub modules		-->
+				<!-- into (local) repository.								-->
+				<!-- This will be done by binding maven-install-plugin		-->
+				<!-- to phase none.											-->
+				<!-- A module can be installed to bind this plugin to		-->
+				<!-- phase install again.									-->
+				<!-- {														-->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>default-install</id>
+							<phase>none</phase>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- }														-->
+
+			</plugins>
+		</pluginManagement>
+
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>org.ow2.asm</groupId>
+				<artifactId>asm-commons</artifactId>
+				<version>4.0</version>
+			</dependency>
+			<!-- heruntergeladen von: http://spi.googlecode.com/files/spi.jar alternativ: 
+				http://projectlombok.org/ivyrepo/tools/spi-0.2.4.jar in das locale m2 repository 
+				gelegt: mvn install:install-file -Dfile=/home/prpr/Downloads/spi.jar -DgroupId=org.mangosdk.spi 
+				-DartifactId=spi -Dversion=0.2.4 -Dpackaging=jar -DgeneratePom=true -->
+			<dependency>
+				<groupId>org.mangosdk.spi</groupId>
+				<artifactId>spi</artifactId>
+				<version>0.2.4</version>
+				<scope>compile</scope>
+			</dependency>
+			<!-- Download: wget http://projectlombok.org/ivyrepo/tools/com.zwitserloot.cmdreader-1.2.jar -->
+			<!-- Install: mvn install:install-file -Dfile=/tmp/com.zwitserloot.cmdreader-1.2.jar 
+				-DgroupId=com.zwitserloot -DartifactId=cmdreader -Dversion=1.2 -Dpackaging=jar 
+				-DgeneratePom=true -->
+			<dependency>
+				<groupId>com.zwitserloot</groupId>
+				<artifactId>cmdreader</artifactId>
+				<version>1.2</version>
+			</dependency>
+			<!-- Download: wget http://projectlombok.org/downloads/lombok.patcher-0.6.jar -->
+			<!-- Install: mvn install:install-file -Dfile=/tmp/lombok.patcher-0.6.jar 
+				-DgroupId=org.projectlombok -DartifactId=lombok.patcher -Dversion=0.6 -Dpackaging=jar 
+				-DgeneratePom=true -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok.patcher</artifactId>
+				<version>0.6</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.core</groupId>
+				<artifactId>org.eclipse.core.runtime</artifactId>
+				<version>3.6.0.v20100505</version>
+			</dependency>
+			<dependency>
+				<groupId>sun.jdk</groupId>
+				<artifactId>tools-java7</artifactId>
+				<!-- rein informativ, durch systemPath wird das jar bestimmt -->
+				<version>1.7</version>
+				<scope>system</scope>
+				<!-- systemPath>${java.home}/../lib/tools.jar</systemPath -->
+				<!-- ${java.home} kann auf java 1.6 zeigen, version wird nicht kontrolliert -->
+				<!-- absoluter pfad zu tools.jar der installierten java version -->
+				<!-- @TODO tools.jar als eigenes Maven artifact bereit stellen -->
+				<systemPath>/usr/lib/jvm/java-7-oracle/lib/tools.jar</systemPath>
+			</dependency>
+			<dependency>
+				<groupId>sun.jdk</groupId>
+				<artifactId>tools-java6</artifactId>
+				<!-- rein informativ, durch systemPath wird das jar bestimmt -->
+				<version>1.6</version>
+				<scope>system</scope>
+				<!-- systemPath>${java.home}/../lib/tools.jar</systemPath -->
+				<!-- ${java.home} kann auf java 1.6 zeigen, version wird nicht kontrolliert -->
+				<!-- unter Windows / Mac etc. anzupassen -->
+				<!-- @TODO tools.jar als eigenes Maven artifact bereit stellen -->
+				<systemPath>/usr/lib/jvm/java-6-sun-1.6.0.26/lib/tools.jar</systemPath>
+			</dependency>
+			<!-- Download: wget http://projectlombok.org/ivyrepo/eclipse/org.eclipse.jdt.ui_3.6.0.v20100602-1600.jar -->
+			<!-- Install: mvn install:install-file -Dfile=/tmp/org.eclipse.jdt.ui_3.6.0.v20100602-1600.jar 
+				-DgroupId=org.eclipse.jdt -DartifactId=ui -Dversion=3.6.0.v20100602-1600 
+				-Dpackaging=jar -DgeneratePom=true -->
+			<dependency>
+				<groupId>org.eclipse.jdt</groupId>
+				<artifactId>ui</artifactId>
+				<version>3.6.0.v20100602-1600</version>
+			</dependency>
+			<dependency>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>org.eclipse.jdt.core</artifactId>
+				<version>3.6.0.v_A58</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.jdt.core.compiler</groupId>
+				<artifactId>ecj</artifactId>
+				<version>3.7.2</version>
+			</dependency>
+
+
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.10</version>
+				<scope>test</scope>
+			</dependency>
+
+
+
+			<dependency>
+				<groupId>org.projectlombok.mvn</groupId>
+				<artifactId>core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok.mvn</groupId>
+				<artifactId>utils</artifactId>
+				<version>${project.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>sun.jdk</groupId>
+						<artifactId>${javatools_version}</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok.mvn</groupId>
+				<artifactId>javac-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok.mvn</groupId>
+				<artifactId>javac-java6</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok.mvn</groupId>
+				<artifactId>javac-java7</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok.mvn</groupId>
+				<artifactId>installer</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok.mvn</groupId>
+				<artifactId>eclipseAgent</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok.mvn</groupId>
+				<artifactId>delombok</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok.mvn</groupId>
+				<artifactId>lombok-assembly</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<modules>
+		<module>utils</module>
+		<module>core</module>
+		<module>installer</module>
+		<module>eclipseAgent</module>
+		<module>lombok-assembly</module>
+		<module>delombok</module>
+		<module>javac-java6</module>
+		<module>javac-java7</module>
+		<module>javac-api</module>
+		<module>test</module>
+	</modules>
+
+</project>

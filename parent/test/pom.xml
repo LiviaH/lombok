@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.projectlombok.mvn</groupId>
+		<artifactId>parent</artifactId>
+		<version>0.11.4</version>
+	</parent>
+	<groupId>org.projectlombok.mvn</groupId>
+	<artifactId>test</artifactId>
+	<version>0.11.4</version>
+	<name>test</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<commons-logging.version>1.1</commons-logging.version>
+		<log4j.version>1.2.16</log4j.version>
+		<slf4j-api.version>1.6.1</slf4j-api.version>
+	</properties>
+
+	<build>
+		<resources>
+			<!-- create a test.properties file which holds path to current dependecies -->
+			<!-- and can be accessed from java code -->
+			<!-- { -->
+			<!-- include test.properties -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>test.properties</include>
+				</includes>
+			</resource>
+			<!-- exclude everything else -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>test.properties</exclude>
+				</excludes>
+			</resource>
+			<!-- } -->
+		</resources>
+
+		<plugins>
+			<!-- tests must run with our new lombok as javaagent -->
+			<!-- { -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12.3</version>
+				<configuration>
+					<argLine>
+						-javaagent:../lombok-jar/target/lombok-jar-${project.version}-all.jar
+					</argLine>
+				</configuration>
+			</plugin>
+			<!-- } -->
+		</plugins>
+	</build>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>${commons-logging.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-api.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok.mvn</groupId>
+			<artifactId>delombok</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

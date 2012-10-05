@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>parent</artifactId>
+		<groupId>org.projectlombok.mvn</groupId>
+		<version>0.11.4</version>
+	</parent>
+	<groupId>org.projectlombok.mvn</groupId>
+	<artifactId>delombok</artifactId>
+	<version>0.11.4</version>
+	<name>delombok</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.8.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok.mvn</groupId>
+			<artifactId>core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok.mvn</groupId>
+			<artifactId>utils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.zwitserloot</groupId>
+			<artifactId>cmdreader</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>sun.jdk</groupId>
+			<artifactId>tools-java7</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>sun.jdk</groupId>
+			<artifactId>tools-java6</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>sun.jdk</groupId>
+					<artifactId>tools-java6</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+</project>

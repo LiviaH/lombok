@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>parent</artifactId>
+		<groupId>org.projectlombok.mvn</groupId>
+		<version>0.11.4</version>
+	</parent>
+	<groupId>org.projectlombok.mvn</groupId>
+	<artifactId>core</artifactId>
+	<name>core</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<resources>
+			<!-- create a main.properties file which holds the current version -->
+			<!-- and can be accessed from java code -->
+			<!-- { -->
+			<!-- include main.properties -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>main.properties</include>
+				</includes>
+			</resource>
+			<!-- exclude everything else -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>main.properties</exclude>
+				</excludes>
+			</resource>
+			<!-- } -->
+		</resources>
+		
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.ow2.asm</groupId>
+			<artifactId>asm-commons</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mangosdk.spi</groupId>
+			<artifactId>spi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.zwitserloot</groupId>
+			<artifactId>cmdreader</artifactId>
+		</dependency>
+
+		<!-- welche Version muss hier genommen werden, 6 oder 7?? -->
+		<dependency>
+			<groupId>sun.jdk</groupId>
+			<artifactId>${javatools_version}</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok.patcher</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.core</groupId>
+			<artifactId>org.eclipse.core.runtime</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok.mvn</groupId>
+			<artifactId>utils</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok.mvn</groupId>
+			<artifactId>javac-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok.mvn</groupId>
+			<artifactId>javac-java6</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok.mvn</groupId>
+			<artifactId>javac-java7</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+</project>

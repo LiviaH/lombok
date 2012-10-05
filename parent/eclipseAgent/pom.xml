@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>parent</artifactId>
+		<groupId>org.projectlombok.mvn</groupId>
+		<version>0.11.4</version>
+	</parent>
+	<groupId>org.projectlombok.mvn</groupId>
+	<artifactId>eclipseAgent</artifactId>
+	<version>0.11.4</version>
+	<name>eclipseAgent</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok.patcher</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jdt</groupId>
+			<artifactId>ui</artifactId>
+		</dependency>
+		<dependency>
+    		<groupId>org.sonatype.tycho</groupId>
+    		<artifactId>org.eclipse.jdt.core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok.mvn</groupId>
+			<artifactId>core</artifactId>
+		</dependency>
+	</dependencies>
+</project>
