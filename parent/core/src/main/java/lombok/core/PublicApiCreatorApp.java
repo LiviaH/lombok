@@ -35,7 +35,6 @@ import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
 
 import lombok.Lombok;
-import lombok.installer.IdeFinder;
 import lombok.patcher.inject.LiveInjector;
 
 import org.mangosdk.spi.ProviderFor;
@@ -80,8 +79,19 @@ public class PublicApiCreatorApp extends LombokApp {
 	 * a jar that wasn't accessed via the file-system, or if its started via e.g. unpacking the jar.
 	 */
 	private static File findOurJar() {
-		return new File(LiveInjector.findPathJar(IdeFinder.class));
+		Class clazz = null;
+		try {
+			clazz = Thread.class.getClassLoader().loadClass("lombok.installer.IdeFinder");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if( null == clazz ){
+			return null;
+		}
+		return new File(LiveInjector.findPathJar(clazz));
 	}
+
 	
 	private int writeApiJar(File outFile) throws Exception {
 		File selfRaw = findOurJar();
