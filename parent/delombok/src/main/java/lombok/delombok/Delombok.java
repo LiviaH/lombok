@@ -380,8 +380,19 @@ public class Delombok {
 			return false;
 		}
 		
-		JavaCompiler delegate = compiler.processAnnotations(compiler.enterTrees(toJavacList(roots)));
-		delegate.flow(delegate.attribute(delegate.todo));
+		lombok.delombok.JavaCompilerWrapper delegate = null;
+		JavaCompiler _delegate = compiler.processAnnotations(compiler.enterTrees(toJavacList(roots)));
+		try {
+			if (JavaCompiler.version().startsWith("1.6")) {
+				delegate = (JavaCompilerWrapper) Class.forName("lombok.delombok.java6.JavaCompilerWrapper").getConstructor(_delegate.getClass()).newInstance(_delegate);
+			} else {
+				delegate = (JavaCompilerWrapper) Class.forName("lombok.delombok.java7.JavaCompilerWrapper").getConstructor(_delegate.getClass()).newInstance(_delegate);
+			}
+		} catch (Exception e) {
+			if (e instanceof RuntimeException) throw (RuntimeException)e;
+			throw new RuntimeException(e);
+		}
+
 		for (JCCompilationUnit unit : roots) {
 			DelombokResult result = new DelombokResult(catcher.getComments(unit), unit, force || options.isChanged(unit));
 			if (verbose) feedback.printf("File: %s [%s]\n", unit.sourcefile.getName(), result.isChanged() ? "delomboked" : "unchanged");
