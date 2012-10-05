@@ -45,6 +45,7 @@ import javax.tools.Diagnostic.Kind;
 
 import lombok.patcher.inject.LiveInjector;
 
+@org.mangosdk.spi.ProviderFor(javax.annotation.processing.Processor.class)
 @SupportedAnnotationTypes("*")
 public class AnnotationProcessor extends AbstractProcessor {
 	private static String trace(Throwable t) {
