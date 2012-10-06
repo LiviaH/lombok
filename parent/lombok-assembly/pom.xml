@@ -17,13 +17,13 @@
 	<description>Assemble lombok jar's which can used as application and/or addons.</description>
 	<build>
 		<plugins>
-			<!-- Create lombok jar with all modules and external jars	-->
-			<!-- {														-->
-      		<plugin>
-      			<artifactId>maven-assembly-plugin</artifactId>
-      			<version>2.3</version>
-      			<configuration>
-      				<archive>
+			<!-- Create lombok jar with all modules and external jars -->
+			<!-- { -->
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<archive>
 						<manifest>
 							<mainClass>lombok.core.Main</mainClass>
 							<addClasspath>true</addClasspath>
@@ -35,25 +35,25 @@
 							<Can-Redefine-Classes>true</Can-Redefine-Classes>
 							<Lombok-Version>${project.version}</Lombok-Version>
 						</manifestEntries>
-          			</archive>
-      				<descriptors>
-      					<descriptor>src/assembly.xml</descriptor>
-      				</descriptors>
-      			</configuration>
-      			<executions>
-          			<execution>
-            			<phase>package</phase>
-            			<goals>
-              				<goal>attached</goal>
-            			</goals>
-          			</execution>
-        		</executions>
-      		</plugin>
-      		<!-- }														 -->
-      		
-			<!-- Install this artifact into (local) repository.		-->
-			<!-- (Overwrite parent/pom.xml settings)				-->
-			<!-- {													-->
+					</archive>
+					<descriptors>
+						<descriptor>src/assembly.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>attached</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- } -->
+
+			<!-- Install this artifact into (local) repository. -->
+			<!-- (Overwrite parent/pom.xml settings) -->
+			<!-- { -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-install-plugin</artifactId>
@@ -75,26 +75,41 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- } 													-->
-      		
-      		<!-- This module do not have any java implementations.	-->
-      		<!-- Do not try to create a jar file.					-->
-      		<!-- {													-->
-      		<plugin>
-      			<groupId>org.apache.maven.plugins</groupId>
-      			<artifactId>maven-jar-plugin</artifactId>
-      			<executions>
-      				<execution>
-      					<id>default-jar</id>
-      					<phase>none</phase>
-      				</execution>
-      			</executions>
-      		</plugin>
-      		<!-- }													-->
-      		
+			<!-- } -->
+
+			<!-- Deploy lombok distribution -->
+			<!-- { -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-deploy</id>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- } -->
+
+
+			<!-- This module do not have any java implementations. -->
+			<!-- Do not try to create a jar file. -->
+			<!-- { -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-jar</id>
+						<phase>none</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- } -->
+
 		</plugins>
 	</build>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.projectlombok.mvn</groupId>

@@ -9,7 +9,17 @@
 
 	<properties>
 		<javatools_version>tools-java7</javatools_version>
+		<local_lombok_maven_repository.url>file://~/git/public.lombok.maven.repository</local_lombok_maven_repository.url>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>public.lombok.maven.repository</id>
+			<name>Public Lombok Repository on GitHub</name>
+			<url>https://raw.github.com/LiviaH/public.lombok.maven.repository/master</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
 
 	<build>
 		<pluginManagement>
@@ -43,9 +53,9 @@
 					</configuration>
 				</plugin>
 
-				<!-- keine pom.xml in die jar Dateien aufnehmen!			-->
-				<!-- (interessiert nicht, wie die pom.xml ausgesehen hat)	-->
-				<!-- {														-->
+				<!-- keine pom.xml in die jar Dateien aufnehmen! -->
+				<!-- (interessiert nicht, wie die pom.xml ausgesehen hat) -->
+				<!-- { -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
@@ -55,15 +65,15 @@
 						</archive>
 					</configuration>
 				</plugin>
-				<!-- }														-->
+				<!-- } -->
 
-				<!-- Do not install this artifact and all sub modules		-->
-				<!-- into (local) repository.								-->
-				<!-- This will be done by binding maven-install-plugin		-->
-				<!-- to phase none.											-->
-				<!-- A module can be installed to bind this plugin to		-->
-				<!-- phase install again.									-->
-				<!-- {														-->
+				<!-- Do not install this artifact and all sub modules -->
+				<!-- into (local) repository. -->
+				<!-- This will be done by binding maven-install-plugin -->
+				<!-- to phase none. -->
+				<!-- A module can be installed to bind this plugin to -->
+				<!-- phase install again. -->
+				<!-- { -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-install-plugin</artifactId>
@@ -74,7 +84,21 @@
 						</execution>
 					</executions>
 				</plugin>
-				<!-- }														-->
+				<!-- } -->
+
+				<!-- Do not deploy this artifact and all submodules	-->
+				<!-- {												-->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>default-deploy</id>
+							<phase>none</phase>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- }												-->
 
 			</plugins>
 		</pluginManagement>
@@ -89,29 +113,20 @@
 				<artifactId>asm-commons</artifactId>
 				<version>4.0</version>
 			</dependency>
-			<!-- Download: http://spi.googlecode.com/files/spi.jar --> 
-			<!-- alternate download: http://projectlombok.org/ivyrepo/tools/spi-0.2.4.jar  -->  
-			<!-- install: mvn install:install-file -Dfile=/tmp/Downloads/spi.jar -DgroupId=org.mangosdk.spi 
-				-DartifactId=spi -Dversion=0.2.4 -Dpackaging=jar -DgeneratePom=true -->
+			<!-- provided by public.lombok.maven.repository -->
 			<dependency>
 				<groupId>org.mangosdk.spi</groupId>
 				<artifactId>spi</artifactId>
 				<version>0.2.4</version>
 				<scope>compile</scope>
 			</dependency>
-			<!-- Download: wget http://projectlombok.org/ivyrepo/tools/com.zwitserloot.cmdreader-1.2.jar -->
-			<!-- Install: mvn install:install-file -Dfile=/tmp/com.zwitserloot.cmdreader-1.2.jar 
-				-DgroupId=com.zwitserloot -DartifactId=cmdreader -Dversion=1.2 -Dpackaging=jar 
-				-DgeneratePom=true -->
+			<!-- provided by public.lombok.maven.repository -->
 			<dependency>
 				<groupId>com.zwitserloot</groupId>
 				<artifactId>cmdreader</artifactId>
 				<version>1.2</version>
 			</dependency>
-			<!-- Download: wget http://projectlombok.org/downloads/lombok.patcher-0.6.jar -->
-			<!-- Install: mvn install:install-file -Dfile=/tmp/lombok.patcher-0.6.jar 
-				-DgroupId=org.projectlombok -DartifactId=lombok.patcher -Dversion=0.6 -Dpackaging=jar 
-				-DgeneratePom=true -->
+			<!-- provided by public.lombok.maven.repository -->
 			<dependency>
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok.patcher</artifactId>
@@ -144,7 +159,7 @@
 				<!-- ${java.home} kann auf java 1.6 zeigen, version wird nicht kontrolliert -->
 				<!-- unter Windows / Mac etc. anzupassen -->
 				<!-- @TODO tools.jar als eigenes Maven artifact bereit stellen -->
-				<systemPath>/usr/lib/jvm/java-6-sun-1.6.0.26/lib/tools.jar</systemPath>
+				<systemPath>/usr/lib/jvm/java-6-sun/lib/tools.jar</systemPath>
 			</dependency>
 			<!-- Download: wget http://projectlombok.org/ivyrepo/eclipse/org.eclipse.jdt.ui_3.6.0.v20100602-1600.jar -->
 			<!-- Install: mvn install:install-file -Dfile=/tmp/org.eclipse.jdt.ui_3.6.0.v20100602-1600.jar 
@@ -230,7 +245,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<modules>
 		<module>utils</module>
 		<module>core</module>
@@ -243,5 +258,13 @@
 		<module>javac-api</module>
 		<module>test</module>
 	</modules>
+
+	<distributionManagement>
+		<repository>
+			<id>local_lombok_maven_repository</id>
+			<name>Local Lombok Repository (Git)</name>
+			<url>${local_lombok_maven_repository.url}</url>
+		</repository>
+	</distributionManagement>
 
 </project>
