@@ -36,12 +36,12 @@ public class TestLombokFilesIdempotent implements DirectoryRunner.TestParams {
 	
 	@Override
 	public File getAfterDirectory() {
-		return new File("test/transform/resource/after-delombok");
+		return new File("src/test/resources/transform/after-delombok");
 	}
 	
 	@Override
 	public File getMessagesDirectory() {
-		return new File("test/transform/resource/messages-idempotent");
+		return new File("src/test/resources/transform/messages-idempotent");
 	}
 	
 	@Override

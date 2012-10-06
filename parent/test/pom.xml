@@ -53,7 +53,7 @@
 				<version>2.12.3</version>
 				<configuration>
 					<argLine>
-						-javaagent:../lombok-jar/target/lombok-jar-${project.version}-all.jar
+						-javaagent:../lombok-assembly/target/lombok-assembly-${project.version}-all.jar
 					</argLine>
 				</configuration>
 			</plugin>

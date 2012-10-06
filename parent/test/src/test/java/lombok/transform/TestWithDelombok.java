@@ -41,16 +41,16 @@ public class TestWithDelombok implements DirectoryRunner.TestParams {
 	
 	@Override
 	public File getBeforeDirectory() {
-		return new File("test/transform/resource/before");
+		return new File("src/test/resources/transform/before");
 	}
 	
 	@Override
 	public File getAfterDirectory() {
-		return new File("test/transform/resource/after-delombok");
+		return new File("src/test/resources/transform/after-delombok");
 	}
 	
 	@Override
 	public File getMessagesDirectory() {
-		return new File("test/transform/resource/messages-delombok");
+		return new File("src/test/resources/transform/messages-delombok");
 	}
 }

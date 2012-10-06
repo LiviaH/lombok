@@ -22,6 +22,7 @@
 package lombok;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +31,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.atomic.AtomicReference;
+
+import lombok.core.Version;
 
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
 import org.eclipse.jdt.internal.compiler.CompilationResult;
@@ -125,10 +129,34 @@ public class RunTestsViaEcj extends AbstractRunTests {
 				i.remove();
 			}
 		}
-		classpath.add("dist/lombok.jar");
-		classpath.add("lib/test/commons-logging.jar");
-		classpath.add("lib/test/slf4j-api.jar");
-		classpath.add("lib/test/log4j.jar");
+		classpath.add("../lombok-assembly/target/lombok-assembly-" + Version.getVersion() + "-all.jar");
+		classpath.add( TestProperties.getProperty("commons-logging.path") );
+		classpath.add( TestProperties.getProperty("slf4j-api.path") );
+		classpath.add( TestProperties.getProperty("log4j.path") );
 		return new FileSystem(classpath.toArray(new String[0]), new String[] {file.getAbsolutePath()}, "UTF-8");
 	}
 }
+
+
+class TestProperties {
+	
+	static Properties properties = null;
+	
+	static String getProperty( String key ){
+		if( null == properties ){
+			try {
+			java.util.Properties _properties = new java.util.Properties();
+			InputStream iStream = TestProperties.class.getClassLoader().getResourceAsStream("test.properties");
+			java.io.BufferedInputStream stream = new java.io.BufferedInputStream( iStream );
+			_properties.load(stream);
+			stream.close();
+			properties = _properties;
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return properties.getProperty(key);
+	}
+	
+}
+

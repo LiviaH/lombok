@@ -44,10 +44,10 @@ import org.junit.Test;
 
 public class TestClassFileMetaData {
 	
-	private static ClassFileMetaData foo = create(new File("test/bytecode/resource/Foo.java"));
-	private static ClassFileMetaData bar = create(new File("test/bytecode/resource/Bar.java"));
-	private static ClassFileMetaData baz = create(new File("test/bytecode/resource/Baz.java"));
-	private static ClassFileMetaData buux = create(new File("test/bytecode/resource/Buux.java"));
+	private static ClassFileMetaData foo = create(new File("src/test/resources/bytecode/Foo.java"));
+	private static ClassFileMetaData bar = create(new File("src/test/resources/bytecode/Bar.java"));
+	private static ClassFileMetaData baz = create(new File("src/test/resources/bytecode/Baz.java"));
+	private static ClassFileMetaData buux = create(new File("src/test/resources/bytecode/Buux.java"));
 	
 	@Test
 	public void testGetClassName() {
@@ -182,6 +182,9 @@ public class TestClassFileMetaData {
 	private static byte[] compile(File file) {
 		try {
 			JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+			// patch nullpointerexception, tools.jar available? {
+			assertNotNull("Compiler not found. Reason 1: you use a JRE instaed of JDK. Reason 2: you use JDK but tools.jar is not in your classpath.", compiler);
+			// }
 			File tempDir = getTempDir();
 			tempDir.mkdirs();
 			List<String> options = Arrays.asList("-proc:none", "-d", tempDir.getAbsolutePath());

@@ -45,16 +45,16 @@ public class TestWithEcj implements DirectoryRunner.TestParams {
 	
 	@Override
 	public File getBeforeDirectory() {
-		return new File("test/transform/resource/before");
+		return new File("src/test/resources/transform/before");
 	}
 	
 	@Override
 	public File getAfterDirectory() {
-		return new File("test/transform/resource/after-ecj");
+		return new File("src/test/resources/transform/after-ecj");
 	}
 	
 	@Override
 	public File getMessagesDirectory() {
-		return new File("test/transform/resource/messages-ecj");
+		return new File("src/test/resources/transform/messages-ecj");
 	}
 }

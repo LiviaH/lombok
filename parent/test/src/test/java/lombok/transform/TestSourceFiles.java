@@ -38,11 +38,11 @@ public class TestSourceFiles implements DirectoryRunner.TestParams {
 	}
 	
 	public File getBeforeDirectory() {
-		return new File("test/pretty/resource/before");
+		return new File("src/test/resources/pretty/before");
 	}
 	
 	public File getAfterDirectory() {
-		return new File("test/pretty/resource/after");
+		return new File("src/test/resources/pretty/after");
 	}
 	
 	@Override
