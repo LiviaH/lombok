@@ -7,7 +7,7 @@ public class VersionTest {
 
 	@Test
 	public void currentVersionCheck(){
-		org.junit.Assert.assertEquals("0.11.4", Version.getVersion() );
+		org.junit.Assert.assertEquals("0.11.5", Version.getVersion() );
 	}
 	
 }

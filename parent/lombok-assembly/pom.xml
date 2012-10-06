@@ -6,18 +6,19 @@
 	<parent>
 		<artifactId>parent</artifactId>
 		<groupId>org.projectlombok.mvn</groupId>
-		<version>0.11.4</version>
+		<version>0.11.5</version>
 	</parent>
-	<groupId>org.projectlombok.mvn</groupId>
 	<artifactId>lombok-assembly</artifactId>
-	<version>0.11.4</version>
 	<name>lombok-assembly</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<description>Assemble lombok jar's which can used as application and/or addons.</description>
 	<build>
 		<plugins>
+			<!-- Create lombok jar with all modules and external jars	-->
+			<!-- {														-->
       		<plugin>
       			<artifactId>maven-assembly-plugin</artifactId>
       			<version>2.3</version>
@@ -38,8 +39,6 @@
       				<descriptors>
       					<descriptor>src/assembly.xml</descriptor>
       				</descriptors>
-      				<!-- install/use assembled jar only -->
-      				<!-- appendAssemblyId>false</appendAssemblyId -->
       			</configuration>
       			<executions>
           			<execution>
@@ -50,7 +49,7 @@
           			</execution>
         		</executions>
       		</plugin>
-      		
+      		<!-- }														 -->
       		
 			<!-- Install this artifact into (local) repository.		-->
 			<!-- (Overwrite parent/pom.xml settings)				-->
@@ -60,7 +59,7 @@
 				<artifactId>maven-install-plugin</artifactId>
 				<configuration>
 					<generatePom>true</generatePom>
-					<file>target/lombok-assembly-0.11.4-all.jar</file>
+					<file>target/lombok-assembly-${project.version}-all.jar</file>
 					<groupId>org.projectlombok.mvn</groupId>
 					<artifactId>lombok</artifactId>
 					<packaging>jar</packaging>
@@ -77,6 +76,21 @@
 				</executions>
 			</plugin>
 			<!-- } 													-->
+      		
+      		<!-- This module do not have any java implementations.	-->
+      		<!-- Do not try to create a jar file.					-->
+      		<!-- {													-->
+      		<plugin>
+      			<groupId>org.apache.maven.plugins</groupId>
+      			<artifactId>maven-jar-plugin</artifactId>
+      			<executions>
+      				<execution>
+      					<id>default-jar</id>
+      					<phase>none</phase>
+      				</execution>
+      			</executions>
+      		</plugin>
+      		<!-- }													-->
       		
 		</plugins>
 	</build>
