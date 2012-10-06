@@ -161,10 +161,7 @@
 				<!-- @TODO tools.jar als eigenes Maven artifact bereit stellen -->
 				<systemPath>/usr/lib/jvm/java-6-sun/lib/tools.jar</systemPath>
 			</dependency>
-			<!-- Download: wget http://projectlombok.org/ivyrepo/eclipse/org.eclipse.jdt.ui_3.6.0.v20100602-1600.jar -->
-			<!-- Install: mvn install:install-file -Dfile=/tmp/org.eclipse.jdt.ui_3.6.0.v20100602-1600.jar 
-				-DgroupId=org.eclipse.jdt -DartifactId=ui -Dversion=3.6.0.v20100602-1600 
-				-Dpackaging=jar -DgeneratePom=true -->
+			<!-- provided by public.lombok.maven.repository -->
 			<dependency>
 				<groupId>org.eclipse.jdt</groupId>
 				<artifactId>ui</artifactId>
