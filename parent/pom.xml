@@ -89,9 +89,9 @@
 				<artifactId>asm-commons</artifactId>
 				<version>4.0</version>
 			</dependency>
-			<!-- heruntergeladen von: http://spi.googlecode.com/files/spi.jar alternativ: 
-				http://projectlombok.org/ivyrepo/tools/spi-0.2.4.jar in das locale m2 repository 
-				gelegt: mvn install:install-file -Dfile=/home/prpr/Downloads/spi.jar -DgroupId=org.mangosdk.spi 
+			<!-- Download: http://spi.googlecode.com/files/spi.jar --> 
+			<!-- alternate download: http://projectlombok.org/ivyrepo/tools/spi-0.2.4.jar  -->  
+			<!-- install: mvn install:install-file -Dfile=/tmp/Downloads/spi.jar -DgroupId=org.mangosdk.spi 
 				-DartifactId=spi -Dversion=0.2.4 -Dpackaging=jar -DgeneratePom=true -->
 			<dependency>
 				<groupId>org.mangosdk.spi</groupId>
