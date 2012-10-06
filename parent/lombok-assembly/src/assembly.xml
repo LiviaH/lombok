@@ -1,0 +1,37 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+  <id>all</id>
+  <formats>
+    <format>jar</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory></outputDirectory>
+      <unpack>true</unpack>
+      <scope>runtime</scope>
+      <includes>
+        <include>org.projectlombok.mvn:core</include>
+        <include>org.projectlombok.mvn:eclipseAgent</include>
+        <include>org.projectlombok.mvn:installer</include>
+        <include>org.projectlombok.mvn:utils</include>
+        <include>org.projectlombok.mvn:javac-api</include>
+        <include>org.projectlombok.mvn:javac-java6</include>
+        <include>org.projectlombok.mvn:javac-java7</include>
+        <include>org.projectlombok.mvn:delombok</include>
+        
+        <include>com.zwitserloot:cmdreader</include>
+        <include>org.ow2.asm:asm-commons</include>
+        <include>org.projectlombok:lombok.patcher</include>
+      </includes>
+    </dependencySet>
+  </dependencySets>
+  
+  <!--  merge META-INF/services/* files -->
+  <containerDescriptorHandlers>
+    <containerDescriptorHandler>
+        <handlerName>metaInf-services</handlerName>
+    </containerDescriptorHandler>
+  </containerDescriptorHandlers>
+</assembly>
