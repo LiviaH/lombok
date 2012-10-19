@@ -129,7 +129,7 @@ public class RunTestsViaEcj extends AbstractRunTests {
 				i.remove();
 			}
 		}
-		classpath.add("../lombok-assembly/target/lombok-assembly-" + Version.getVersion() + "-all.jar");
+		classpath.add("../lombok/target/lombok-" + Version.getVersion() + ".jar");
 		classpath.add( TestProperties.getProperty("commons-logging.path") );
 		classpath.add( TestProperties.getProperty("slf4j-api.path") );
 		classpath.add( TestProperties.getProperty("log4j.path") );

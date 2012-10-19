@@ -8,8 +8,8 @@
 		<groupId>org.projectlombok.mvn</groupId>
 		<version>0.11.5</version>
 	</parent>
-	<artifactId>lombok-assembly</artifactId>
-	<name>lombok-assembly</name>
+	<artifactId>lombok</artifactId>
+	<name>lombok</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,6 +23,7 @@
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.3</version>
 				<configuration>
+					<appendAssemblyId>false</appendAssemblyId>
 					<archive>
 						<manifest>
 							<mainClass>lombok.core.Main</mainClass>
@@ -57,21 +58,20 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-install-plugin</artifactId>
-				<configuration>
-					<generatePom>true</generatePom>
-					<file>target/lombok-assembly-${project.version}-all.jar</file>
-					<groupId>org.projectlombok.mvn</groupId>
-					<artifactId>lombok</artifactId>
-					<packaging>jar</packaging>
-					<version>${project.version}</version>
-				</configuration>
 				<executions>
 					<execution>
-						<id>default-install</id>
 						<phase>install</phase>
 						<goals>
 							<goal>install-file</goal>
 						</goals>
+						<configuration>
+							<generatePom>true</generatePom>
+							<packaging>jar</packaging>
+							<artifactId>${project.artifactId}</artifactId>
+							<groupId>${project.groupId}</groupId>
+							<version>${project.version}</version>
+							<file>${project.build.directory}/${project.artifactId}-${project.version}.jar</file>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -82,10 +82,23 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>
 				<executions>
 					<execution>
-						<id>default-deploy</id>
 						<phase>deploy</phase>
+						<goals>
+							<goal>deploy-file</goal>
+						</goals>
+						<configuration>
+							<goal>deploy-file</goal>
+							<generatePom>true</generatePom>
+							<packaging>jar</packaging>
+							<artifactId>${project.artifactId}</artifactId>
+							<groupId>${project.groupId}</groupId>
+							<version>${project.version}</version>
+							<file>${project.build.directory}/${project.artifactId}-${project.version}.jar</file>
+							<url>${project.distributionManagement.repository.url}</url>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

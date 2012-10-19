@@ -9,6 +9,7 @@
 
 	<properties>
 		<javatools_version>tools-java7</javatools_version>
+		<spi_version>0.2.4</spi_version>
 		<local_lombok_maven_repository.url>file://~/git/public.lombok.maven.repository</local_lombok_maven_repository.url>
 	</properties>
 
@@ -35,7 +36,7 @@
 						<target>1.6</target>
 						<compilerVersion>1.7</compilerVersion>
 						<annotationProcessors>
-							<annotationProcessor>~/.m2/repository/org/mangosdk/spi/spi/0.2.4/spi-0.2.4.jar</annotationProcessor>
+							<annotationProcessor>${settings.localRepository}/org/mangosdk/spi/spi/${spi_version}/spi-${spi_version}.jar</annotationProcessor>
 						</annotationProcessors>
 					</configuration>
 				</plugin>
@@ -117,7 +118,7 @@
 			<dependency>
 				<groupId>org.mangosdk.spi</groupId>
 				<artifactId>spi</artifactId>
-				<version>0.2.4</version>
+				<version>${spi_version}</version>
 				<scope>compile</scope>
 			</dependency>
 			<!-- provided by public.lombok.maven.repository -->
@@ -237,7 +238,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.projectlombok.mvn</groupId>
-				<artifactId>lombok-assembly</artifactId>
+				<artifactId>lombok</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
@@ -248,7 +249,7 @@
 		<module>core</module>
 		<module>installer</module>
 		<module>eclipseAgent</module>
-		<module>lombok-assembly</module>
+		<module>lombok</module>
 		<module>delombok</module>
 		<module>javac-java6</module>
 		<module>javac-java7</module>
